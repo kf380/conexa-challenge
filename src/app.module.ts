@@ -12,7 +12,7 @@ import { RepositoryModule } from '@/infrastructure/mongodb/repository.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.development',
+      envFilePath: process.env.NODE_ENV === 'docker' ? '.env.docker' : '.env.development',
     }),
     CacheModule.register({
       store: redisStore as unknown as CacheStore,
