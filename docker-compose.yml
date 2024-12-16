@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/movies_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: tfadsds@đsf45@fsfsAS
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_DATABASE: movies_db
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis:7.0
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mongo-data:
+  redis-data:
